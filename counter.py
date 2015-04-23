@@ -20,15 +20,14 @@ import glob    # needed for gathering list of data_files
 from collections import Counter # needed for easy counting of words. Not super efficient, but thats OK.
 import pprint  # easier debug
 import os      # access to portable path seperators and newline characters
-import csv
+import csv     # for export
 
+# make sure we have enough arguments
 if len(sys.argv) < 3:
     print("Usage - " + sys.argv[0] + " wordlist" + " directory_of_files")
     sys.exit()
 
 pp = pprint.PrettyPrinter(indent=4)
-
-
 
 # words will, assuming the first argument is a valid filename,
 # contain all the lines of the document.
@@ -52,7 +51,6 @@ for handle in data_file_handles:
     word_count_per_file[handle.name] = Counter(handle.read().split()) # reads the files into a list of words
     handle.close()
 
-
 if DEBUG:
     print("\nPer file data structure")
     pp.pprint(word_count_per_file)
@@ -72,6 +70,8 @@ if DEBUG:
     print("\nTotal sum data structure")
     pp.pprint(word_count_per_file)
 
+
+# write everything to disk
 writer_total = csv.writer(open('count_total.csv', 'wt'))
 writer_total.writerow(["Word", "Count"])
 for key, value in word_count_total.items():
