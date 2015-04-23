@@ -1,6 +1,21 @@
 #!/usr/bin/python
-# This code reads a file containing vice and virtue words.
-# These two groups are split in the following way:
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# This code reads a file containing words you would like to count.
+# The words must be on their own line. Left, or right-side whitespace is stripped (including newlines)
+# Example format:
 # Vice words:
 # a
 # b
@@ -11,7 +26,12 @@
 # y
 # z
 
-# Note that the parser is very stringent on formatting.
+# The lines "Vice words:" and "Virtue words:" would be ignored since they contain a : (our heading delimiter)
+# The blank newline before the "Virtue words:" line will also be removed.
+
+
+# Note that the code is /very/ verbose, and heavily commented. It's intentional so that non-computer savvy colleagues can
+# hack at this with some understanding of what is going on.
 
 DEBUG = True
 
@@ -59,7 +79,7 @@ if DEBUG:
 word_count_total = {}
 for fil in word_count_per_file.keys():               # each file
     for word in word_count_per_file[fil].keys():     # each word in file
-        if word not in words:
+        if word not in words:     # not in our word list
            continue
         elif word in word_count_total:
             word_count_total[word] = word_count_total[word] + word_count_per_file[fil][word]
